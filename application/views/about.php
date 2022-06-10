@@ -1,81 +1,72 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
-<section class="inner-about-area pt-120 pb-120">
+<section id="or-about-1" class="or-about-section-3">
     <div class="container">
-        <div class="row">
-            <h2 class="hading-title">Welcome to Bulls Watch <span>Security Services</span> &amp; Surveillance Squad</h2>
-            <div class="col-lg-6">
-                <div class="inner-about-text">
-                    <p>We are having 10+ Years Experience in Security Services. We offer Highly Educated & Trained Staff to our clients all over Gujarat. Our security professional work round the clock towards the common objective of protecting the assets, property and life. With a sharp focus on security, we extend our services in close co-operation with customer providing specialized and customized security solutions.</p>
-                    <p>We also provide special security services and private investigation services to clients as per their specific requirement.We also provide armed security personnel licensed to carry guns or pistols to select clients like banks and celebrities/individuals who have threat risk to their life.</p>
-                    <p>Bouncers are capable of handle out when the situations turn problematic. Enhance security of your place with Bouncer Servicesprovided by us. It would also help you to add a new feature of safety making it most preferred.</p> 
-                    <ul class="twocolumn list-icons">
-                        <li>Security Guard</li>
-                        <li>Event Management</li>
-                        <li>Gun-Man</li>
-                        <li>Vigilance Staff</li>
-                        <li>Bouncer</li>
-                    </ul>
-                </div>
+        <div class="or-about-content-1 position-relative">
+            <div class="or-about-img-1 position-absolute">
+                <?= img("assets/images/about-1.png") ?>
             </div>
-            <div class="col-lg-6">
-                <div class="inner-about-quote">
-                    <div class="installation-img">
-                        <?= img('assets/images/about.png'); ?>
+            <div class="or-about-text-area  d-flex justify-content-end">
+                <div class="or-about-img-text-wrapper-1">
+                    <div class="or-section-title headline pera-content">
+                        <span class="sub-title">About us</span>
+                        <h2 class="case-animate-time">Direct from Mother Nature</h2>
+                        <span class="sub-text">Ayurvedic medicine is one of the world’s oldest holistic healing systems.</span>
+                        <p class="text-justify">Ayurvedic medicine is one of the world’s oldest holistic healing systems. It was developed more than 10,000 years ago in India. We are as a firm want to make a chain to full fill dreams of millions with natural products, with the help of ayurveda.</p>
+                        <p class="text-justify">It’s based on the belief that health and wellness depend on a delicate balance between the mind, body, and soul.Our main goal is to promote good health.</p>
+                    </div>
+                    <div class="or-about-feature-wrapper d-flex">
+                        <div class="or-about-feature-innebox1 headline pera-content d-flex">
+                            <div class="or-about-feature-text">
+                                <span><strong>Ayurveda believes that the entire universe is composed of five elements :-</strong></span>
+                                <p>Vayu (Air) | Jala (Water) | Aakash ( Space or ether) | Prithvi (Earth) | Teja ( Fire)</p><br>
+                                <span><strong>These five elements ( referred to as Pancha Mahabhoota in Ayurveda) are believed to form three basic humors of human body in varying combinations. The three humors are :-</strong></span>
+                                <p>Vata Dosha | Pitta Dosha | Kapha Dosha</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<section id="clint-review-area" class="clint-review-c pt-80 pb-60">
+<section id="visionmission" class="or-shop-banner-section">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-8">
-                <h2 class="hading-title">Welcome to Bulls Watch <span>Security Services</span> &amp; Surveillance Squad</h2>
-            </div>
-        </div>
-        <!-- Clint Review -->
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="clint-review-slider owl-carousel owl-theme">
-                    <?php foreach ($testimonials as $test): ?>
-                    <div class="clint-review-item">
-                        <div class="clint-review-text">
-                            <h6><?= $test['t_title'] ?> ! </h6>
-                            <p><?= $test['description'] ?></p>
-                            <div class="clint-name"><i class="fas fa-quote-left"></i> <?= $test['t_name'] ?></div>
+        <div class="or-shop-banner-content">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="or-shop-banner-innerbox position-relative wow fadeInUp ">
+                        <div class="or-shop-banner-text headline pera-content">
+                            <h3>Our Vision</h3>
+                            <p>Responsibility of keeping the traditional system of medicines alive in modern times.</p>
+                            <?= anchor('about', 'Read More <i class="fas fa-long-arrow-right"></i>', 'class="sb-btn wow fadeInUp"') ?>
                         </div>
-                        <div class="clint-review-img">
-                            <?= img($test['image']) ?>
+                        <div class="or-shop-banner-img-wrapper">
+                            <div class="or-shop-banner-img-1 position-absolute">
+                                <?= img("assets/images/vision.png") ?>
+                            </div>
+                            <div class="or-shop-banner-img-2 position-absolute">
+                                <?= img("assets/images/vission-mission-back.png") ?>
+                            </div>
                         </div>
                     </div>
-                    <?php endforeach ?>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="hading-title">Customer <span>Review</span></div>
-                <form method="POST" id="contact-form" class="contact-form-box row">
-                    <div class="col-lg-6 mt-4">
-                        <input type="text" name="name" class="name-box" placeholder="Name" required="" />
-                    </div>
-                    <div class="col-lg-6 mt-4">
-                        <input type="text" name="t_title" class="name-box" placeholder="Title" required="" />
-                    </div>
-                    <div class="col-lg-6 mt-4">
-                        <div class="custom-file">
-                            <input type="file" name="image" class="custom-file-input" id="image" required="">
-                            <label class="custom-file-label" for="image">You can attach : .jpg, .jpeg, .png extensions only*</label>
+                <div class="col-lg-6">
+                    <div class="or-shop-banner-innerbox position-relative type-2  wow fadeInUp ">
+                        <div class="or-shop-banner-text  headline pera-content">
+                            <h3>Our Mission</h3>
+                            <p>Contribution in authenticity of products which are purely ayurvedic and their further growth.</p>
+                            <?= anchor('about', 'Read More <i class="fas fa-long-arrow-right"></i>', 'class="sb-btn wow fadeInUp"') ?>
+                        </div>
+                        <div class="or-shop-banner-img-wrapper">
+                            <div class="or-shop-banner-img-1 position-absolute">
+                                <?= img("assets/images/mission.png") ?>
+                            </div>
+                            <div class="or-shop-banner-img-2 position-absolute">
+                                <?= img("assets/images/vission-mission-back.png") ?>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-12 mt-4">
-                        <textarea name="message" class="review_placeholder" id="message-box" placeholder="Review" required=""></textarea>
-                    </div>
-                    <div class="col-lg-12">
-                        <button type="submit" class="btn-1 message-send hover-effect mt-3">Submit Review</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>

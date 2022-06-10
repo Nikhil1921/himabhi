@@ -12,7 +12,16 @@ $route[ADMIN."/dashboard"] = ADMIN."/home";
 
 // front routes
 
-/* if(strpos(PATH_INFOS, ADMIN) === false)
+$route["about"] = "home/about";
+$route["contact"] = "home/contact";
+$route["shop"] = "home/shop";
+$route["shipping-policy"] = "home/shipping_policy";
+$route["terms-and-conditions"] = "home/terms_and_conditions";
+$route["special-features"] = "home/special_features";
+$route["why-himabhi"] = "home/why_himabhi";
+$route["add-to-cart"]['post'] = "home/add_to_cart";
+
+if(strpos(PATH_INFOS, ADMIN) === false)
 {
     $route["(:any)"] = "home/product/$1";
-} */
+}

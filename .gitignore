@@ -16,9 +16,9 @@ queries
 
 uploads/banners/*
 !uploads/banners/index.html
-uploads/testimonials/*
-!uploads/testimonials/index.html
-uploads/gallery/*
-!uploads/gallery/index.html
-uploads/apply/*
-!uploads/apply/index.html
+uploads/ingredients/*
+!uploads/ingredients/index.html
+uploads/features/*
+!uploads/features/index.html
+uploads/products/*
+!uploads/products/index.html

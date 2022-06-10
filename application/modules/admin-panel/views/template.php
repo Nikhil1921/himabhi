@@ -45,10 +45,19 @@
                             <?= anchor(admin('dashboard'), '<i class="fa fa-home"></i> <p>Dashboard</p>', 'class="nav-link"'); ?>
                         </li>
                         <li <?= $name === 'banner' ? 'class="active"' : '' ?>>
-                            <?= anchor(admin('banner'), '<i class="fa fa-image"></i> banner') ?>
+                            <?= anchor(admin('banner'), '<i class="fa fa-image"></i> <p>banner</p>', 'class="nav-link"') ?>
                         </li>
-                        <li <?= $name === 'testimonial' ? 'class="active"' : '' ?>>
-                            <?= anchor(admin('testimonial'), '<i class="fa fa-users"></i> testimonial') ?>
+                        <li <?= $name === 'products' ? 'class="active"' : '' ?>>
+                            <?= anchor(admin('products'), '<i class="fa fa-file-text-o"></i> <p>products</p>', 'class="nav-link"') ?>
+                        </li>
+                        <li <?= $name === 'ingredients' ? 'class="active"' : '' ?>>
+                            <?= anchor(admin('ingredients'), '<i class="fa fa-file-text-o"></i> <p>ingredients</p>', 'class="nav-link"') ?>
+                        </li>
+                        <li <?= $name === 'features' ? 'class="active"' : '' ?>>
+                            <?= anchor(admin('features'), '<i class="fa fa-file-text-o"></i> <p>features</p>', 'class="nav-link"') ?>
+                        </li>
+                        <li <?= $name === 'reviews' ? 'class="active"' : '' ?>>
+                            <?= anchor(admin('reviews'), '<i class="fa fa-users"></i> <p>reviews</p>', 'class="nav-link"') ?>
                         </li>
                     </ul>
                 </div>
@@ -97,19 +106,6 @@
                 <div class="content">
                 <?= $contents ?>
                 </div>
-                <footer class="footer footer-black  footer-white ">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="credits ml-auto">
-                                <span class="copyright">
-                                    © <script>
-                                    document.write(new Date().getFullYear())
-                                    </script>, made by <a href="https://www.densetek.com" class="text-danger" target="_blank">Densetek Infotech</a>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
             </div>
         </div>
 
@@ -134,6 +130,9 @@
         <?= script("assets/back/js/plugins/bootstrap-notify.js") ?>
         <?php if(isset($image)): ?>
         <?= script("assets/back/js/plugins/jasny-bootstrap.min.js") ?>
+        <?php endif ?>
+        <?php if(isset($select)): ?>
+        <?= script("assets/back/js/plugins/bootstrap-selectpicker.js") ?>
         <?php endif ?>
         <?= script("assets/back/js/script.js") ?>
     </body>
