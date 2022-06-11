@@ -124,9 +124,7 @@
                     <div class="col-lg-2 col-sm-12 filtr-item just20" data-category="1, 3, 4" data-sort="Busy streets">
                         <div class="or-product-innerbox-item type-1 text-center position-relative">
                             <div class="e-commerce-btn">
-                                <?= form_open('add-to-cart', 'id="prod-icon-'.e_id($p['id']).'"', ['p_id' => e_id($p['id'])]) ?>
-                                <a href="javascript:;" onclick="document.getElementById('prod-icon-<?= e_id($p['id']) ?>').submit();"><i class="fal fa-shopping-cart"></i></a>
-                                <?= form_close() ?>
+                                <a href="javascript:;" onclick="cart.add('<?= my_crypt($p['id']) ?>')"><i class="fal fa-shopping-cart"></i></a>
                                 <a href="javascript:;"><i class="fal fa-heart"></i></a>
                                 <a href="javascript:;"><i class="fal fa-eye"></i></a>
                             </div>
@@ -147,9 +145,7 @@
                                 </div>
                             </div>
                             <div class="or-product-btn text-center">
-                                <?= form_open('add-to-cart', 'id="prod-'.e_id($p['id']).'"', ['p_id' => e_id($p['id'])]) ?>
-                                <a class="d-flex justify-content-center align-items-center" onclick="document.getElementById('prod-<?= e_id($p['id']) ?>').submit();" href="javascript:;" tabindex="0">Add To Cart</a>
-                                <?= form_close() ?>
+                                <a class="d-flex justify-content-center align-items-center" onclick="cart.add('<?= my_crypt($p['id']) ?>')" href="javascript:;" tabindex="0">Add To Cart</a>
                             </div>
                         </div>
                     </div>

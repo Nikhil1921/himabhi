@@ -3805,7 +3805,7 @@ select:visited {
 }
 
 .or-cart-content-table table {
-  width: 770px;
+  width: 100%;
 }
 .or-cart-content-table table th {
   font-size: 15px;

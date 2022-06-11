@@ -5,6 +5,7 @@ class Home extends Public_controller {
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load->library('cart');
 	}
 
 	public function index()
@@ -19,7 +20,7 @@ class Home extends Public_controller {
 			return $prod;
 
 		}, $this->main->getAll('products', 'id, t_title, slug, image, price, short_description', ['is_deleted' => 0]));
-		
+
 		return $this->template->load('template', "home", $data);
 	}
 
@@ -51,6 +52,38 @@ class Home extends Public_controller {
         $data['bread'] = ['About', 'About'];
         
 		return $this->template->load('template', 'about', $data);
+	}
+
+	public function cart()
+	{
+		$data['title'] = 'Cart';
+        $data['name'] = 'cart';
+        $data['bread'] = ['CART', 'Proceed to Shop'];
+        
+		return $this->template->load('template', 'cart', $data);
+	}
+
+	public function checkout()
+	{
+		$data['title'] = 'Checkout';
+        $data['name'] = 'checkout';
+        $data['bread'] = ['CHECKOUT', 'Check out'];
+		
+		foreach ($this->cart->contents() as $item) {
+			$prod = $this->main->get('products', 'id, quantity', ['id' => my_crypt($item['id'], 'd'), 'quantity >= ' => $item['qty']]);
+			
+			if(! $prod) $this->cart->remove($item['rowid']);
+			else{
+				$quantities[] = [
+						'id' => $prod['id'],
+						'quantity' => $prod['quantity'] - $item['qty']
+					];
+			}
+		}
+
+		// if(isset($quantities)) $this->main->updateQuantities($quantities);
+		
+		return $this->template->load('template', 'checkout', $data);
 	}
 
 	public function contact()
@@ -89,18 +122,99 @@ class Home extends Public_controller {
 
 	public function add_to_cart()
 	{
-		re($this->input->server('HTTP_REFERER'));
+		check_ajax();
+
+		$post = $this->input->post();
+		$prod = $this->main->get('products', 't_title, price, image, slug, packing', ['id' => my_crypt($post['p_id'], 'd'), 'quantity >= ' => $post['qty']]);
+		
+		if($prod)
+		{
+			$img = json_decode($prod['image']);
+
+			$check = null;
+			$msg = "Product added to your cart.";
+
+			if($this->cart->contents())
+				foreach ($this->cart->contents() as $k => $v)
+					if($v['id'] === $post['p_id']){
+						$msg = "Quantity updated in your cart.";
+						$check = $k;
+					}
+
+			if($check){
+				$data = [
+					'rowid' => $check,
+					'qty'   => $post['qty']
+				];
+
+				$this->cart->update($data);
+			}else{
+				$data = [
+					'id'      => $post['p_id'],
+					'qty'     => $post['qty'],
+					'price'   => $prod['price'],
+					'name'    => $prod['t_title'].' - '.$prod['packing'],
+					'options' => ['image' => $img->main, 'slug' => $prod['slug']]
+				];
+
+				$this->cart->insert($data);
+			}
+
+			$response = [
+				'error'   => false,
+				'count'   => $this->cart->total_items(),
+				'cart'    => strpos($this->input->server('HTTP_REFERER'), 'cart') !== -1 ? $this->load->view('cart-table', '', TRUE) : '',
+				'message' => $msg
+			];
+		}else
+			$response = [
+				'error' => true,
+				'message' => "Product not available at this moment."
+			];
+		
+		die(json_encode($response));
 	}
 
-	/* public function shipping_policy()
+	public function delete_cart()
 	{
+		check_ajax();
 
+		$this->cart->remove($this->input->post('rowid'));
+
+		$response = [
+			'error'   => false,
+			'count'   => $this->cart->total_items(),
+			'cart'    => $this->load->view('cart-table', '', TRUE),
+			'message' => "Product removed from your cart."
+		];
+
+		die(json_encode($response));
 	}
 
-	public function terms_and_conditions()
+	public function checkout_post()
 	{
+		check_ajax();
 
-	} */
+		/* [f_name] => 
+		[l_name] => 
+		[mobile] => 
+		[email] => 9537128259
+		[password] => Densetek@2018
+		[address] => 
+		[notes] => 
+		[payment_type] => Cash on delivery */
+
+		re($_POST);
+
+		/* $response = [
+			'error'   => false,
+			'count'   => $this->cart->total_items(),
+			'cart'    => $this->load->view('cart-table', '', TRUE),
+			'message' => "Product removed from your cart."
+		];
+
+		die(json_encode($response)); */
+	}
 
 	public function special_features()
 	{
@@ -129,11 +243,39 @@ class Home extends Public_controller {
 		return $this->template->load('template', 'why_himabhi', $data);
 	}
 
+	/* public function shipping_policy()
+	{
+
+	}
+
+	public function terms_and_conditions()
+	{
+
+	} */
+
+	public function update_quantities()
+	{
+		check_ajax();
+
+		sleep(30);
+
+		if($this->input->post('cart'))
+			foreach ($this->input->post('cart') as $id => $qty) {
+				$prod = $this->main->get('products', 'id, quantity', ['id' => my_crypt($id, 'd')]);
+				
+				$quantities[] = [
+						'id' => $prod['id'],
+						'quantity' => $prod['quantity'] + $qty
+					];
+			}
+		
+		if(isset($quantities)) $this->main->updateQuantities($quantities);
+	}
+
 	public function error_404()
 	{
 		$data['title'] = 'Error 404';
         $data['name'] = 'Error 404';
-        $data['bread'] = ['Error 404', 'Error 404'];
 
 		return $this->template->load('template', 'error_404', $data);
 	}

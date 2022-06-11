@@ -1,3 +1,4 @@
+"use strict";
 /* -----------------------------------------------------------------------------
 
 
@@ -8,7 +9,7 @@ Last change:    00/00/00
 -------------------------------------------------------------------------------- */
 (function() {
 
-	"use strict";
+	
 
 	var Prysm = {
 		init: function() {
@@ -37,7 +38,7 @@ Last change:    00/00/00
 			},
 			preloader: function (){
 				jQuery(window).on('load', function(){
-					jQuery('#preloader').fadeOut('slow',function(){jQuery(this).remove();});
+					jQuery('#preloader').fadeOut('slow');
 				})
 			},
 			BackgroundImage: function (){
@@ -1001,3 +1002,129 @@ Last change:    00/00/00
 	});
 
 })();
+
+// custom code started
+
+const base_url = $('input[name="base_url"]').val();
+
+const toast = (msg, error) => {
+	
+	toastr.options = {
+		positionClass: "toast-top-center",
+		onclick: null,
+	};
+
+	error ? toastr["error"](msg) : toastr["success"](msg);
+
+};
+
+const cart = {
+	add: (p_id) => {
+		const qty = $("input[name=quantity]").val() ? $("input[name=quantity]").val() : 1;
+		cart.save(p_id, qty);
+	},
+	update: (p_id, rowid, operation) => {
+		let qty = $(`input[name=${rowid}]`).val();
+
+		operation === '+' ? qty++ : qty--;
+
+		if(qty > 0 && $(`input[name=${rowid}]`).attr('max') >= qty)
+		{
+			$(`input[name=${rowid}]`).val(qty);
+			const show = cart.save(p_id, qty);
+			$("#show-cart").html(show.cart);
+		}
+	},
+	delete: (rowid) => {
+		$.ajax({
+			url: `${base_url}delete-cart`,
+			type: "POST",
+			data: {rowid: rowid},
+			dataType: "json",
+			async: false,
+			beforeSend: () => {
+				$('#preloader').fadeIn('fast');
+			},
+			success: (response) => {
+				$("#preloader").fadeOut("slow");
+				if (!response.error) $(".prod-count").html(response.count);
+				toast(response.message, response.error);
+				$("#show-cart").html(response.cart);
+			},
+			error: (xhr, ajaxOptions, thrownError) => {
+				$("#preloader").fadeOut("slow");
+				toast("Something not going good. Try again.", 1);
+			}
+		});
+		return;
+	},
+	save: (p_id, qty) => {
+		var data;
+		$.ajax({
+			url: `${base_url}add-to-cart`,
+			type: "POST",
+			data: {p_id: p_id, qty: qty},
+			dataType: "json",
+			async: false,
+			beforeSend: () => {
+				$('#preloader').fadeIn('fast');
+			},
+			success: (response) => {
+				data = response;
+				if (!response.error) $(".prod-count").html(response.count);
+				$("#preloader").fadeOut("slow");
+				toast(response.message, response.error);
+			},
+			error: (xhr, ajaxOptions, thrownError) => {
+				$("#preloader").fadeOut("slow");
+				toast("Something not going good. Try again.", 1);
+			}
+		});
+		return data;
+	},
+	checkout: () => {
+		cart.verifyOrder();
+		/* if($("input[name=payment_type]:checked").val() === 'Cash on delivery')
+			
+		else
+			return; */
+	},
+	verifyOrder: () => {
+		$.ajax({
+			url: `${base_url}checkout`,
+			type: "POST",
+			data: $('#checkout-form').serialize(),
+			dataType: "json",
+			async: false,
+			beforeSend: () => {
+				$('#preloader').fadeIn('fast');
+			},
+			success: (response) => {
+				console.log(response);
+				/* data = response;
+				if (!response.error) $(".prod-count").html(response.count);
+				$("#preloader").fadeOut("slow");
+				toast(response.message, response.error); */
+			},
+			error: (xhr, ajaxOptions, thrownError) => {
+				$("#preloader").fadeOut("slow");
+				toast("Something not going good. Try again.", 1);
+			}
+		});
+	}
+};
+
+/* if (location.href.indexOf("checkout") !== -1)
+{
+	const checkoutTimeout = setTimeout(() => {
+
+		$.ajax({
+			url: `${base_url}update-quantities`,
+			type: "POST",
+			data: $("#update-qty").serialize()
+		});
+
+		clearTimeout(checkoutTimeout);
+
+	}, 1000 * 60 * 1);
+} */

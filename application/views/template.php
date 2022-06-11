@@ -22,7 +22,8 @@ if(!isset($prods))
         <?= link_tag("assets/css/slick.css", 'stylesheet', 'text/css') ?>
         <?= link_tag("assets/css/slick-theme.css", 'stylesheet', 'text/css') ?>
         <?= link_tag("assets/css/style.css", 'stylesheet', 'text/css') ?>
-        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.0.0/css/all.css">
+        <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.0.0/css/all.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     </head>
     <body class="organio-wrapper">
         <div id="preloader"></div>
@@ -68,11 +69,11 @@ if(!isset($prods))
                         </div>
                         <div class="or-header-login-register d-flex">
                             <div class="login-register-button">
-                                <?= anchor('login', '<i class="fa-solid fa-right-to-bracket"></i>', 'title="Login"'); ?>
+                                <?= anchor($this->session->auth ? 'logout' : 'login', '<i class="fa-solid fa-right-to-bracket"></i>', 'title="'.$this->session->auth ? 'Logout' : 'Login'.'"'); ?>
                             </div>
                             <div class="or-header-e-commerce-btn">
                                 <a href="tel:<?= $this->config->item('mobile') ?>" title="Call"><i class="fa-solid fa-mobile-notch"></i></a>
-                                <a class="or-canvas-cart-trigger" href="cart"><i class="fal fa-shopping-cart"></i><span>03</span></a>
+                                <?= anchor('cart', '<i class="fal fa-shopping-cart"></i><span class="prod-count">'.$this->cart->total_items().'</span>', 'class="or-canvas-cart-trigger"'); ?>
                             </div>
                         </div>
                     </div>
@@ -158,9 +159,9 @@ if(!isset($prods))
                                     <?= anchor('', img('assets/images/logo.png')); ?>
                                     <p class="text-justify">Ayurvedic medicine is one of the world’s oldest holistic healing systems. It was developed more than 10,000 years ago in India.</p>
                                     <div class="footer-social">	
-                                        <a href="https://www.facebook.com/himabhiayurveda/?hc_ref=ARSo3t45d1w_Qm4GU9wMrvSXvYm3KWU6Qizv-BL_hEd_8JkA2S-qy7vdPhsYylT43tY&fref=nf" target="_blank" tabindex="0"><i class="fab fa-facebook-f"></i></a>
-                                        <a href="https://www.instagram.com/ayurvedhimabhi/?utm_medium=copy_link" target="_blank" tabindex="0"><i class="fab fa-instagram"></i></a>
-                                        <a href="https://www.youtube.com/channel/UCeiLxnrgh88kf8SeaTNdRLA" target="_blank" tabindex="0"><i class="fab fa-youtube"></i></a>
+                                        <a href="<?= $this->config->item('facebook') ?>" target="_blank" tabindex="0"><i class="fab fa-facebook-f"></i></a>
+                                        <a href="<?= $this->config->item('instagram') ?>" target="_blank" tabindex="0"><i class="fab fa-instagram"></i></a>
+                                        <a href="<?= $this->config->item('youtube') ?>" target="_blank" tabindex="0"><i class="fab fa-youtube"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -238,7 +239,7 @@ if(!isset($prods))
             });
         </script>
         <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-        
+        <?= form_hidden('base_url', base_url()) ?>
         <!-- For Js Library -->
         <?= script("assets/js/jquery.min.js") ?>
         <?= script("assets/js/bootstrap.min.js") ?>
@@ -256,6 +257,7 @@ if(!isset($prods))
         <?= script("assets/js/parallax-scroll.js") ?>
         <?= script("assets/js/rbtools.min.js") ?>
         <?= script("assets/js/rs6.min.js") ?>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
         <?= script("assets/js/script.js") ?>
     </body>
 </html>

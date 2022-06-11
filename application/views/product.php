@@ -37,13 +37,16 @@ $imgs = json_decode($prod['image']); ?>
                             <span class="option-title">Quantity:</span>
                             <div class="shop-quantity-option d-flex">
                                 <div class="quantity-field position-relative  d-inline-block">
-                                    <input type="text" name="select1" value="1" class="quantity-input-arrow quantity-input-2  text-center">
+                                    <?php $qty = 1; foreach($this->cart->contents() as $val)
+                                        if($val['id'] === my_crypt($prod['id']))
+                                            $qty = $val['qty']; ?>
+                                    <input type="text" name="quantity" readonly value="<?= $qty ?>" min="1" max="<?= $prod['quantity'] ?>" class="quantity-input-arrow quantity-input-2  text-center">
                                 </div>
                                 <div class="stock-avaiable"><?= $prod['quantity'] ?> pieces available </div>
                             </div>
                         </div>
                         <div class="shop-details-btn ">
-                            <a href="javascript:;">Add To Cart</a>
+                            <a href="javascript:;" onclick="cart.add('<?= my_crypt($prod['id']) ?>')">Add To Cart</a>
                             <a href="javascript:;">Add To Wishlist</a>
                         </div>
                     </div>
