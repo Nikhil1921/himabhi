@@ -196,6 +196,28 @@ class Home extends Public_controller {
 		die(json_encode($response));
 	}
 
+	public function add_to_wish()
+	{
+		check_ajax();
+
+		if(!$this->session->auth)
+			$response = [
+				'error'   => true,
+				'message' => "Login to add product to wishlist."
+			];
+		else
+		{
+			$add = $this->main->add_to_wish(my_crypt($this->input->post('p_id'), 'd'));
+
+			$response = [
+				'error'   => !$add,
+				'message' => $add ? "Product added to your wishlist." : "Product not added to wishlist. Try again."
+			];
+		}
+
+		die(json_encode($response));
+	}
+
 	public function checkout_post()
 	{
 		check_ajax();

@@ -24,8 +24,9 @@ $route["shipping-policy"] = "home/shipping_policy";
 $route["terms-and-conditions"] = "home/terms_and_conditions";
 $route["special-features"] = "home/special_features";
 $route["why-himabhi"] = "home/why_himabhi";
-$route["add-to-cart"]['post'] = "home/add_to_cart";
+$route["add-to-wish"]['post'] = "home/add_to_wish";
 $route["delete-cart"]['post'] = "home/delete_cart";
+$route["delete-wish"]['post'] = "user/delete_wish";
 $route["my-orders"] = "user";
 // $route["update-quantities"]['post'] = "home/update_quantities";
 

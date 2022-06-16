@@ -71,6 +71,7 @@ if(!isset($prods))
                             <div class="login-register-button">
                                 <?= anchor($this->session->auth ? 'my-orders' : 'login', '<i class="fa-solid fa-'.($this->session->auth ? 'user' : 'right-to-bracket').'"></i>', 'title="'.$this->session->auth ? 'My Orders' : 'Login'.'"'); ?>
                             </div>
+                            <?= $this->session->auth ? '<div class="login-register-button">'.anchor('user/wishlist', '<i class="fal fa-heart"></i>', 'title="Wishlist"').'</div>' : '' ?>
                             <?= $this->session->auth ? '<div class="login-register-button">'.anchor('user/logout', '<i class="fa-solid fa-right-to-bracket"></i>', 'title="Logout"').'</div>' : '' ?>
                             <div class="or-header-e-commerce-btn">
                                 <a href="tel:<?= $this->config->item('mobile') ?>" title="Call"><i class="fa-solid fa-mobile-notch"></i></a>
@@ -155,28 +156,16 @@ if(!isset($prods))
                 <div class="menu" id="menu">
                     <ul class="menu-list">
                         <li class="menu-item">
-                            <a href="index.html" class="menu-link is-active">
-                                <i class="menu-icon fa-solid fa-store"></i>
-                                <span class="menu-name">Home</span>
-                            </a>
+                            <?= anchor('', '<i class="menu-icon fa-solid fa-store"></i><span class="menu-name">Home</span>', 'class="menu-link"'); ?>
                         </li>
                         <li class="menu-item">
-                            <a href="cart.html" class="menu-link">
-                                <i class="menu-icon fa-solid fa-cart-shopping-fast"></i>
-                                <span class="menu-name">Cart</span>
-                            </a>
+                            <?= anchor('cart', '<i class="menu-icon fa-solid fa-cart-shopping-fast"></i><span class="menu-name">Cart</span>', 'class="menu-link"'); ?>
                         </li>
                         <li class="menu-item">
-                            <a href="contact.html" class="menu-link">
-                                <i class="menu-icon fa-solid fa-headset"></i>
-                                <span class="menu-name">Consult</span>
-                            </a>
+                            <?= anchor('checkout', '<i class="menu-icon fa-solid fa-cart-shopping-fast"></i><span class="menu-name">Checkout</span>', 'class="menu-link"'); ?>
                         </li>
                         <li class="menu-item">
-                            <a href="#" class="menu-link">
-                                <i class="menu-icon fa-solid fa-circle-user"></i>
-                                <span class="menu-name">Account</span>
-                            </a>
+                            <?= anchor('shop', '<i class="menu-icon fa-solid fa-cart-shopping"></i><span class="menu-name">Shop</span>', 'class="menu-link"'); ?>
                         </li>
                     </ul>
                 </div>

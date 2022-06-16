@@ -29,6 +29,37 @@ class User extends Public_controller {
         return $this->template->load('template', "user/view_order", $data);
     }
 
+    public function wishlist()
+    {
+        $data['title'] = "My Wishlist";
+        $data['name'] = "wishlist";
+        $data['wishlist'] = $this->main->wishlist();
+        
+        return $this->template->load('template', "user/wishlist", $data);
+    }
+
+    public function delete_wish()
+    {
+        check_ajax();
+
+        $wish = [
+            'u_id' => $this->session->auth,
+            'p_id' => my_crypt($this->input->post('p_id'), 'd')
+        ];
+
+        $delete = $this->main->delete('wish_list', $wish);
+
+        $data['wishlist'] = $this->main->wishlist();
+
+        $response = [
+            'error'   => !$delete,
+            'wish'   => $this->load->view('wish-table', $data, true),
+            'message' => $delete ? "Product removed from your wishlist." : "Product not removed from wishlist. Try again."
+        ];
+
+		die(json_encode($response));
+    }
+
     public function logout()
     {
         $this->session->sess_destroy();

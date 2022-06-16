@@ -1018,6 +1018,50 @@ const toast = (msg, error) => {
 
 };
 
+const wish = {
+	add: (p_id) => {
+		$.ajax({
+			url: `${base_url}add-to-wish`,
+			type: "POST",
+			data: {p_id: p_id},
+			dataType: "json",
+			async: false,
+			beforeSend: () => {
+				$('#preloader').fadeIn('fast');
+			},
+			success: (response) => {
+				$("#preloader").fadeOut("slow");
+				toast(response.message, response.error);
+			},
+			error: (xhr, ajaxOptions, thrownError) => {
+				$("#preloader").fadeOut("slow");
+				toast("Something not going good. Try again.", 1);
+			}
+		});
+	},
+	delete: (p_id) => {
+		$.ajax({
+			url: `${base_url}delete-wish`,
+			type: "POST",
+			data: {p_id: p_id},
+			dataType: "json",
+			async: false,
+			beforeSend: () => {
+				$('#preloader').fadeIn('fast');
+			},
+			success: (response) => {
+				$("#preloader").fadeOut("slow");
+				toast(response.message, response.error);
+				$("#show-wish").html(response.wish);
+			},
+			error: (xhr, ajaxOptions, thrownError) => {
+				$("#preloader").fadeOut("slow");
+				toast("Something not going good. Try again.", 1);
+			}
+		});
+		return;
+	},
+};
 const cart = {
 	add: (p_id) => {
 		const qty = $("input[name=quantity]").val() ? $("input[name=quantity]").val() : 1;

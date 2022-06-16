@@ -9,6 +9,40 @@ class Main_modal extends MY_Model
         return $this->db->update_batch('products', $data, 'id');
     }
 
+    public function wishlist()
+    {
+        return $this->db->select('w.p_id, p.t_title, p.slug, p.image, p.price, p.packing')
+                        ->where('u_id', $this->session->auth)
+                        ->where('p.is_deleted', 0)
+                        ->join('products p', 'p.id = w.p_id')
+                        ->get('wish_list w')
+                        ->result_array();
+    }
+
+    public function add_to_wish($p_id)
+    {
+        $prod = $this->main->get('products', 'id', ['id' => $p_id]);
+
+        if($prod)
+        {
+            $this->db->trans_start();
+
+            $wish = [
+                'u_id' => $this->session->auth,
+                'p_id' => $p_id
+            ];
+            
+            $this->db->delete('wish_list', $wish);
+            $this->db->insert('wish_list', $wish);
+
+            $this->db->trans_complete();
+
+            return $this->db->trans_status();
+        }
+        else
+            return false;
+    }
+
     public function saveOrder($post)
     {
         $order = [

@@ -47,7 +47,7 @@ $imgs = json_decode($prod['image']); ?>
                         </div>
                         <div class="shop-details-btn ">
                             <a href="javascript:;" onclick="cart.add('<?= my_crypt($prod['id']) ?>')">Add To Cart</a>
-                            <a href="javascript:;">Add To Wishlist</a>
+                            <a href="javascript:;" onclick="wish.add('<?= my_crypt($prod['id']) ?>')">Add To Wishlist</a>
                         </div>
                     </div>
                 </div>

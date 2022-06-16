@@ -15,7 +15,7 @@
                         <div class="or-product-innerbox-item type-1 text-center position-relative">
                             <div class="e-commerce-btn">
                                 <a href="javascript:;" onclick="cart.add('<?= my_crypt($p['id']) ?>')"><i class="fal fa-shopping-cart"></i></a>
-                                <a href="javascript:;"><i class="fal fa-heart"></i></a>
+                                <a href="javascript:;" onclick="wish.add('<?= my_crypt($p['id']) ?>')"><i class="fal fa-heart"></i></a>
                                 <a href="javascript:;"><i class="fal fa-eye"></i></a>
                             </div>
                             <div class="or-product-inner-img">
