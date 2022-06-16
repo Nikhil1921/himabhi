@@ -150,6 +150,39 @@ if(!isset($prods))
         
         <?= $contents ?>
 
+        <div class="footer-mv-nav">
+            <nav class="navbar container">
+                <div class="menu" id="menu">
+                    <ul class="menu-list">
+                        <li class="menu-item">
+                            <a href="index.html" class="menu-link is-active">
+                                <i class="menu-icon fa-solid fa-store"></i>
+                                <span class="menu-name">Home</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="cart.html" class="menu-link">
+                                <i class="menu-icon fa-solid fa-cart-shopping-fast"></i>
+                                <span class="menu-name">Cart</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="contact.html" class="menu-link">
+                                <i class="menu-icon fa-solid fa-headset"></i>
+                                <span class="menu-name">Consult</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="#" class="menu-link">
+                                <i class="menu-icon fa-solid fa-circle-user"></i>
+                                <span class="menu-name">Account</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
         <section id="or-footer-3" class="or-footer-section-3" data-background="<?= base_url('assets/images/footer-bg.png') ?>">
             <div class="container">
                 <div class="footer-widget-wrapper-3">
