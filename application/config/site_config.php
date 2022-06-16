@@ -13,3 +13,7 @@ $config['email'] = 'info@himabhi.com';
 $config['facebook'] = 'https://www.facebook.com/himabhiayurveda/?hc_ref=ARSo3t45d1w_Qm4GU9wMrvSXvYm3KWU6Qizv-BL_hEd_8JkA2S-qy7vdPhsYylT43tY&fref=nf';
 $config['instagram'] = 'https://www.instagram.com/ayurvedhimabhi/?utm_medium=copy_link';
 $config['youtube'] = 'https://www.youtube.com/channel/UCeiLxnrgh88kf8SeaTNdRLA';
+
+$config['merchant_id'] = 'HWpx3PtqNyKDix';
+$config['pay_id'] = 'rzp_test_j7j4Mvu2yV6kh1';
+$config['api_key'] = 'wfG7mIv8oXhfsRgeXSDWL2Hf';

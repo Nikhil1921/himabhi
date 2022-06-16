@@ -18,12 +18,15 @@ $route["shop"] = "home/shop";
 $route["cart"] = "home/cart";
 $route["checkout"]['get'] = "home/checkout";
 $route["checkout"]['post'] = "home/checkout_post";
+$route["login"] = "home/login";
+$route["register"] = "home/register";
 $route["shipping-policy"] = "home/shipping_policy";
 $route["terms-and-conditions"] = "home/terms_and_conditions";
 $route["special-features"] = "home/special_features";
 $route["why-himabhi"] = "home/why_himabhi";
 $route["add-to-cart"]['post'] = "home/add_to_cart";
 $route["delete-cart"]['post'] = "home/delete_cart";
+$route["my-orders"] = "user";
 // $route["update-quantities"]['post'] = "home/update_quantities";
 
 if(strpos(PATH_INFOS, ADMIN) === false)

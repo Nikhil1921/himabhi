@@ -113,5 +113,88 @@ $config = [
                 'max_length' => "Max 500 chars allowed"
             ],
         ],
+    ],
+    'web-login' => [
+        [
+            'field' => 'email',
+            'label' => 'Email',
+            'rules' => 'required|max_length[100]|valid_email|trim',
+            'errors' => [
+                'required' => "%s is required",
+                'valid_email' => "%s is invalid",
+                'max_length' => "Max 100 chars allowed"
+            ],
+        ],
+        [
+            'field' => 'password',
+            'label' => 'Password',
+            'rules' => 'required|max_length[100]|trim',
+            'errors' => [
+                'required' => "%s is required",
+                'max_length' => "Max 100 chars allowed"
+            ],
+        ]
+    ],
+    'web-register' => [
+        [
+            'field' => 'f_name',
+            'label' => 'First name',
+            'rules' => 'required|alpha|max_length[20]|trim',
+            'errors' => [
+                'required' => "%s is required",
+                'alpha' => "%s is invalid",
+                'max_length' => "Max 20 chars allowed",
+            ],
+        ],
+        [
+            'field' => 'l_name',
+            'label' => 'Last name',
+            'rules' => 'required|alpha|max_length[20]|trim',
+            'errors' => [
+                'required' => "%s is required",
+                'alpha' => "%s is invalid",
+                'max_length' => "Max 20 chars allowed",
+            ],
+        ],
+        [
+            'field' => 'mobile',
+            'label' => 'Mobile',
+            'rules' => 'required|is_natural|exact_length[10]|is_unique[users.mobile]|trim',
+            'errors' => [
+                'required' => "%s is required",
+                'is_natural' => "%s is invalid",
+                'exact_length' => "%s is invalid",
+                'is_unique' => "%s is already in use.",
+            ],
+        ],
+        [
+            'field' => 'email',
+            'label' => 'Email',
+            'rules' => 'required|max_length[100]|valid_email|is_unique[users.email]|trim',
+            'errors' => [
+                'required' => "%s is required",
+                'valid_email' => "%s is invalid",
+                'is_unique' => "%s is already in use.",
+                'max_length' => "Max 100 chars allowed"
+            ],
+        ],
+        [
+            'field' => 'password',
+            'label' => 'Password',
+            'rules' => 'required|max_length[100]|trim',
+            'errors' => [
+                'required' => "%s is required",
+                'max_length' => "Max 100 chars allowed"
+            ],
+        ],
+        [
+            'field' => 'address',
+            'label' => 'Address',
+            'rules' => 'required|max_length[150]|trim',
+            'errors' => [
+                'required' => "%s is required",
+                'max_length' => "Max 150 chars allowed"
+            ],
+        ],
     ]
 ];

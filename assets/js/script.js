@@ -1083,34 +1083,88 @@ const cart = {
 		return data;
 	},
 	checkout: () => {
-		cart.verifyOrder();
-		/* if($("input[name=payment_type]:checked").val() === 'Cash on delivery')
+		let finalResponse;
+
+		if($("input[name=payment_type]:checked").val() === 'Cash on delivery')
+		{
+			finalResponse = cart.verifyOrSaveOrder("Cash on delivery");
 			
+			toast(finalResponse.message, finalResponse.error);
+
+			if(!finalResponse.error)
+			{
+				setTimeout(() => {
+					window.location.href = 'my-orders';
+				}, 2000);
+			}
+		}
 		else
-			return; */
+		{
+			let response = cart.verifyOrSaveOrder();
+			
+			var options = {
+				/*live api key*/
+				// "key": "rzp_live_Jf7dJMbtMe1xSC",
+				// "secret": "7QSfgUjxMW5xWKY3ingxBgWN",
+				/*testing api key*/
+				"key": "rzp_test_j7j4Mvu2yV6kh1",
+				"secret": "wfG7mIv8oXhfsRgeXSDWL2Hf",
+				"amount": response.message, // 2000 paise = INR 20
+				"description": "Payment",
+				"prefill": {
+					"name": $("#f_name").val(),
+					"contact": $("#mobile").val(),
+					"email": $("#email").val(),
+				},
+				"handler": function(res) {
+					finalResponse = cart.verifyOrSaveOrder(res.razorpay_payment_id);
+					toast(finalResponse.message, finalResponse.error);
+
+					if(!finalResponse.error)
+					{
+						setTimeout(() => {
+							window.location.href = "my-orders";
+						}, 2000);
+					}
+				}
+			};
+			var rzp1 = new Razorpay(options);
+			rzp1.open();
+			return;
+		}
 	},
-	verifyOrder: () => {
+	verifyOrSaveOrder: (payment_id='') => {
+		var data = $('#checkout-form').serialize();
+		data += "&payment_id=" + payment_id;
+		var returnData;
 		$.ajax({
 			url: `${base_url}checkout`,
 			type: "POST",
-			data: $('#checkout-form').serialize(),
+			data: data,
 			dataType: "json",
 			async: false,
 			beforeSend: () => {
 				$('#preloader').fadeIn('fast');
 			},
 			success: (response) => {
-				console.log(response);
-				/* data = response;
-				if (!response.error) $(".prod-count").html(response.count);
 				$("#preloader").fadeOut("slow");
-				toast(response.message, response.error); */
+				$(".text-danger").html('');
+
+				if (response.error && response.errors){
+					$.each(response.errors, (input, error) => {
+						$(`#error-${input}`).html(error);
+					});
+				}else{
+					returnData = response;
+				}
 			},
 			error: (xhr, ajaxOptions, thrownError) => {
 				$("#preloader").fadeOut("slow");
 				toast("Something not going good. Try again.", 1);
 			}
 		});
+
+		return returnData;
 	}
 };
 

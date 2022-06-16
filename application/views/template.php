@@ -258,6 +258,9 @@ if(!isset($prods))
         <?= script("assets/js/rbtools.min.js") ?>
         <?= script("assets/js/rs6.min.js") ?>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+        <?php if($name === 'checkout'): ?>
+            <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <?php endif ?>
         <?= script("assets/js/script.js") ?>
     </body>
 </html>

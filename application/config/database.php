@@ -11,9 +11,9 @@ switch ($_SERVER['SERVER_NAME']) {
         $db['default'] = array(
             'dsn'   => '',
             'hostname' => 'localhost',
-            'username' => 'thebulls_himabhi',
-            'password' => 'Densetek@2018',
-            'database' => 'thebulls_himabhi',
+            'username' => 'himabhic_himabhi',
+            'password' => 'r1?5;rYVi=&i',
+            'database' => 'himabhic_himabhi',
             'dbdriver' => 'mysqli',
             'dbprefix' => '',
             'pconnect' => (ENVIRONMENT !== 'production'),

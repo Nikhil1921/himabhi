@@ -12,45 +12,43 @@
                                 <div class="col-md-6">
                                     <div class="or-bill-form">
                                         <label for="f_name">First name *</label>
-                                        <input type="text" name="f_name" id="f_name" maxlength="20" />
+                                        <input type="text" value="<?= $user['f_name'] ?>" name="f_name" id="f_name" maxlength="20" />
+                                        <span id="error-f_name" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="or-bill-form">
                                         <label for="l_name">Last name *</label>
-                                        <input type="text" name="l_name" id="l_name" maxlength="20" />
+                                        <input type="text" value="<?= $user['l_name'] ?>" name="l_name" id="l_name" maxlength="20" />
+                                        <span id="error-l_name" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="or-bill-form">
                                         <label for="mobile">Mobile *</label>
-                                        <input type="text" name="mobile" id="mobile" maxlength="10" />
+                                        <input type="text" value="<?= $user['mobile'] ?>" name="mobile" id="mobile" maxlength="10" />
+                                        <span id="error-mobile" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="or-bill-form">
                                         <label for="email">Email ID *</label>
-                                        <input type="email" name="email" id="email" maxlength="100" />
+                                        <input type="email" value="<?= $user['email'] ?>" name="email" id="email" maxlength="100" />
+                                        <span id="error-email" class="text-danger"></span>
                                     </div>
                                 </div>
-                                <?php if(!$this->session->auth): ?>
-                                    <div class="col-md-6">
-                                        <div class="or-bill-form">
-                                            <label for="password">Password *</label>
-                                            <input type="password" name="password" id="password" maxlength="100" />
-                                        </div>
-                                    </div>
-                                <?php endif ?>
                                 <div class="col-md-12">
                                     <div class="or-bill-form">
                                         <label for="address">Address *</label>
-                                        <textarea name="address" id="address"></textarea>
+                                        <textarea name="address" id="address"><?= $user['address'] ?></textarea>
+                                        <span id="error-address" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <h2>Additional Information</h2>
                                 <div class="col-md-12">
                                     <div class="or-bill-form">
                                         <textarea name="notes" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+                                        <span id="error-notes" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>

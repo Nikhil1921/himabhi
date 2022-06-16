@@ -11,6 +11,7 @@ class Home extends Public_controller {
 	public function index()
 	{
 		$data['title'] = "Home";
+		$data['name'] = "Home";
 		$data['banners'] = $this->main->getAll('banners', 'CONCAT("'.$this->config->item('banners').'", banner) banner', []);
 		$this->load->model(admin('products_model'));
 		$data['prods'] = array_map(function($prod){
@@ -68,22 +69,26 @@ class Home extends Public_controller {
 		$data['title'] = 'Checkout';
         $data['name'] = 'checkout';
         $data['bread'] = ['CHECKOUT', 'Check out'];
+        $data['user'] = $this->main->get('users', 'f_name, l_name, mobile, email, address', ['id' => $this->session->auth]);
 		
 		foreach ($this->cart->contents() as $item) {
 			$prod = $this->main->get('products', 'id, quantity', ['id' => my_crypt($item['id'], 'd'), 'quantity >= ' => $item['qty']]);
 			
 			if(! $prod) $this->cart->remove($item['rowid']);
-			else{
+			/* else{
 				$quantities[] = [
 						'id' => $prod['id'],
 						'quantity' => $prod['quantity'] - $item['qty']
 					];
-			}
+			} */
 		}
 
 		// if(isset($quantities)) $this->main->updateQuantities($quantities);
-		
-		return $this->template->load('template', 'checkout', $data);
+
+		if(!$this->session->auth)
+			flashMsg(0, "", "Login to continue.", 'login?redirect=checkout');
+		else
+			return $this->template->load('template', 'checkout', $data);
 	}
 
 	public function contact()
@@ -194,31 +199,115 @@ class Home extends Public_controller {
 	public function checkout_post()
 	{
 		check_ajax();
+		
+		if($this->cart->total_items() > 0)
+		{
+			$validate = [
+				[
+					'field' => 'f_name',
+					'label' => 'First name',
+					'rules' => 'required|alpha|max_length[20]|trim',
+					'errors' => [
+						'required' => "%s is required",
+						'alpha' => "%s is invalid",
+						'max_length' => "Max 20 chars allowed",
+					],
+				],
+				[
+					'field' => 'l_name',
+					'label' => 'Last name',
+					'rules' => 'required|alpha|max_length[20]|trim',
+					'errors' => [
+						'required' => "%s is required",
+						'alpha' => "%s is invalid",
+						'max_length' => "Max 20 chars allowed",
+					],
+				],
+				[
+					'field' => 'mobile',
+					'label' => 'Mobile',
+					'rules' => 'required|is_natural|exact_length[10]|trim',
+					'errors' => [
+						'required' => "%s is required",
+						'is_natural' => "%s is invalid",
+						'exact_length' => "%s is invalid",
+					],
+				],
+				[
+					'field' => 'email',
+					'label' => 'Email',
+					'rules' => 'required|max_length[100]|valid_email|trim',
+					'errors' => [
+						'required' => "%s is required",
+						'valid_email' => "%s is invalid",
+						'max_length' => "Max 100 chars allowed"
+					],
+				],
+				[
+					'field' => 'address',
+					'label' => 'Address',
+					'rules' => 'required|max_length[150]|trim',
+					'errors' => [
+						'required' => "%s is required",
+						'max_length' => "Max 150 chars allowed"
+					],
+				],
+				[
+					'field' => 'notes',
+					'label' => 'Notes',
+					'rules' => 'max_length[150]|alpha_numeric_spaces|trim',
+					'errors' => [
+						'alpha_numeric_spaces' => "Only alpha numeric and spaces are allowed.",
+						'max_length' => "Max 150 chars allowed"
+					],
+				],
+				[
+					'field' => 'payment_type',
+					'label' => 'Payment type',
+					'rules' => 'required|in_list[Cash on delivery,Online payment]|trim',
+					'errors' => [
+						'required' => "%s is required",
+						'in_list' => "%s is invalid",
+					],
+				]
+			];
+			
+			$this->form_validation->set_rules($validate);
+			
+			if ($this->form_validation->run() === FALSE)
+				$response = [
+					'errors'   => $this->form_validation->error_array(),
+					'error'   => true
+				];
+			else{
+				if($this->input->post('payment_id')){
 
-		/* [f_name] => 
-		[l_name] => 
-		[mobile] => 
-		[email] => 9537128259
-		[password] => Densetek@2018
-		[address] => 
-		[notes] => 
-		[payment_type] => Cash on delivery */
+					$order_id = $this->main->saveOrder($this->input->post());
 
-		re($_POST);
+					$response = [
+						'error'   => $order_id ? false : true,
+						'message' => $order_id ? "Order success." : "Order not success. Try again.",
+					];
+				}else{
+					$response = [
+						'error'   => false,
+						'message' => $this->cart->total() * 100
+					];
+				}
+			}
+		}else
+			$response = [
+				'error'   => true,
+				'message' => "Cart is empty."
+			];
 
-		/* $response = [
-			'error'   => false,
-			'count'   => $this->cart->total_items(),
-			'cart'    => $this->load->view('cart-table', '', TRUE),
-			'message' => "Product removed from your cart."
-		];
-
-		die(json_encode($response)); */
+		die(json_encode($response));
 	}
 
 	public function special_features()
 	{
 		$data['title'] = "Home";
+		$data['name'] = "prods";
 		$data['banners'] = $this->main->getAll('banners', 'CONCAT("'.$this->config->item('banners').'", banner) banner', []);
 		$this->load->model(admin('products_model'));
 		$data['prods'] = array_map(function($prod){
@@ -253,11 +342,9 @@ class Home extends Public_controller {
 
 	} */
 
-	public function update_quantities()
+	/* public function update_quantities()
 	{
 		check_ajax();
-
-		sleep(30);
 
 		if($this->input->post('cart'))
 			foreach ($this->input->post('cart') as $id => $qty) {
@@ -270,6 +357,68 @@ class Home extends Public_controller {
 			}
 		
 		if(isset($quantities)) $this->main->updateQuantities($quantities);
+	} */
+
+	public function login()
+	{
+		$data['redirect'] = $this->input->server('QUERY_STRING') ? 'login?'.$this->input->server('QUERY_STRING') : 'login';
+		
+		if ($this->form_validation->run('web-login') === FALSE) {
+			$data['title'] = 'Login';
+			$data['name'] = 'login';
+	
+			return $this->template->load('template', 'login', $data);
+		}else{
+			$post = [
+				'email'    => $this->input->post('email'),
+    			'password' => my_crypt($this->input->post('password'))
+			];
+			
+			if($user = $this->main->check("users", $post, 'id'))
+			{
+				$this->session->set_userdata('auth', $user);
+				$msg = "Login success.";
+				$data['redirect'] = $this->input->get('redirect');
+			}
+			else
+			{
+				$msg = "Invalid credentials.";
+			}
+
+			flashMsg($user, $msg, $msg, $data['redirect']);
+		}
+	}
+
+	public function register()
+	{
+		$data['redirect'] = $this->input->server('QUERY_STRING') ? 'register?'.$this->input->server('QUERY_STRING') : 'register';
+		
+		if ($this->form_validation->run('web-register') === FALSE) {
+			$data['title'] = 'Register';
+			$data['name'] = 'register';
+	
+			return $this->template->load('template', 'register', $data);
+		}else{
+			$post = [
+				'f_name'    => $this->input->post('f_name'),
+				'l_name'    => $this->input->post('l_name'),
+				'mobile'    => $this->input->post('mobile'),
+				'email'     => $this->input->post('email'),
+				'address'   => $this->input->post('address'),
+    			'password'  => my_crypt($this->input->post('password'))
+			];
+			
+			if($user = $this->main->add($post, "users"))
+			{
+				$this->session->set_userdata('auth', $user);
+				$msg = "Register success.";
+				$data['redirect'] = $this->input->get('redirect');
+			}
+			else
+				$msg = "Register not success. Try again.";
+
+			flashMsg($user, $msg, $msg, $data['redirect']);
+		}
 	}
 
 	public function error_404()
