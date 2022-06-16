@@ -1128,7 +1128,7 @@ const cart = {
 					}
 				}
 			};
-			var rzp1 = new Razorpay(options);
+			var rzp1 = new Razorp(options);
 			rzp1.open();
 			return;
 		}

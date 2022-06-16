@@ -8,31 +8,23 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th class="product-name">Product</th>
-                                    <th class="product-price">Price</th>
-                                    <th class="product-quantity">Quantity</th>
-                                    <th class="product-subtotal">Subtotal</th>
+                                    <th class="product-name">Order ID</th>
+                                    <th class="product-quantity">Order Date</th>
+                                    <th class="product-quantity">Last updated</th>
+                                    <th class="product-subtotal">Status</th>
+                                    <th class="product-price">Total</th>
+                                    <th class="product-price">View order</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php if($orders): foreach ($orders as $item): ?>
                                     <tr>
-                                        <td class="product-remove"> <a href="javascript:;" onclick="cart.delete('<?= $item['rowid'] ?>')" class="remove">×</a></td>
-                                        <td class="product-thumbnail"> 
-                                            <?= anchor($item['options']['slug'], img($this->config->item('products').$item['options']['image'], '', 'class="cart-thumb-img"')) ?>
-                                        </td>
-                                        <td class="product-name" data-title="Product"> 
-                                            <?= anchor($item['options']['slug'], $item['name']) ?>
-                                        </td>
-                                        <td class="product-price product-subtotal" data-title="Price"> <span class="amount"><bdi><span class="Price-currencySymbol">&#x20B9;</span><?= $item['price'] ?>.00</bdi></span></td>
-                                        <td>
-                                            <div class="quantity-field position-relative d-inline-block">
-                                                <span class="custom-prev" onclick="cart.update('<?= $item['id'] ?>', '<?= $item['rowid'] ?>', this.innerHTML)">-</span>
-                                                    <input type="text" name="<?= $item['rowid'] ?>" value="<?= $item['qty'] ?>" min="1" max="<?= $this->main->check('products', ['id' => my_crypt($item['id'], 'd')], 'quantity'); ?>" readonly class="quantity-input-arrow text-center">
-                                                <span class="custom-next" onclick="cart.update('<?= $item['id'] ?>', '<?= $item['rowid'] ?>', this.innerHTML)">+</span>
-                                            </div>
-                                        </td>
-                                        <td class="product-subtotal"> <span><bdi><span class="Price-currencySymbol">&#x20B9;</span><?= $item['subtotal'] ?>.00</bdi></span></td>
+                                        <td class="product-subtotal"> <?= $item['order_id'] ?></td>
+                                        <td class="product-subtotal"> <?= date('d-m-Y h:i A', $item['created_at']) ?></td>
+                                        <td class="product-subtotal"> <?= date('d-m-Y h:i A', $item['update_at']) ?></td>
+                                        <td class="product-subtotal"> <?= $item['status'] ?></td>
+                                        <td class="product-subtotal"> <span><bdi><span class="Price-currencySymbol">&#x20B9;</span> <?= $item['total_price'] ?>.00</bdi></span></td>
+                                        <td class="product-remove"> <a href="user/view-order/<?= e_id($item['id']) ?>" class="text-success fa fa-eye"> </a></td>
                                     </tr>
                                 <?php endforeach; else: ?>
                                     <tr>

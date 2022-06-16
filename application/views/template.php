@@ -69,8 +69,9 @@ if(!isset($prods))
                         </div>
                         <div class="or-header-login-register d-flex">
                             <div class="login-register-button">
-                                <?= anchor($this->session->auth ? 'logout' : 'login', '<i class="fa-solid fa-right-to-bracket"></i>', 'title="'.$this->session->auth ? 'Logout' : 'Login'.'"'); ?>
+                                <?= anchor($this->session->auth ? 'my-orders' : 'login', '<i class="fa-solid fa-'.($this->session->auth ? 'user' : 'right-to-bracket').'"></i>', 'title="'.$this->session->auth ? 'My Orders' : 'Login'.'"'); ?>
                             </div>
+                            <?= $this->session->auth ? '<div class="login-register-button">'.anchor('user/logout', '<i class="fa-solid fa-right-to-bracket"></i>', 'title="Logout"').'</div>' : '' ?>
                             <div class="or-header-e-commerce-btn">
                                 <a href="tel:<?= $this->config->item('mobile') ?>" title="Call"><i class="fa-solid fa-mobile-notch"></i></a>
                                 <?= anchor('cart', '<i class="fal fa-shopping-cart"></i><span class="prod-count">'.$this->cart->total_items().'</span>', 'class="or-canvas-cart-trigger"'); ?>
