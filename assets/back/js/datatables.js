@@ -83,22 +83,12 @@ const script = {
         });
         return;
     },
-    viewInquiry: function(id) {
+    viewOrder: function(id) {
         $.ajax({
-            url: `${url}getInquiry/${id}`,
+            url: `${url}getOrder/${id}`,
             success: function (data) {
-                $("#inquiry-details").html(data);
-                $("#inquiryModal").modal();
-            },
-        });
-        return;
-    },
-    viewApply: function(id) {
-        $.ajax({
-            url: `${url}getApply/${id}`,
-            success: function (data) {
-                $("#apply-details").html(data);
-                $("#applyModal").modal();
+                $("#order-details").html(data);
+                $("#orderModal").modal();
             },
         });
         return;
