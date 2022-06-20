@@ -21,7 +21,7 @@ if(!isset($prods))
         <?= link_tag("assets/css/rs6.css", 'stylesheet', 'text/css') ?>
         <?= link_tag("assets/css/slick.css", 'stylesheet', 'text/css') ?>
         <?= link_tag("assets/css/slick-theme.css", 'stylesheet', 'text/css') ?>
-        <?= link_tag("assets/css/style.css", 'stylesheet', 'text/css') ?>
+        <?= link_tag("assets/css/style.css?v=1.0.1", 'stylesheet', 'text/css') ?>
         <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.0.0/css/all.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     </head>
@@ -159,7 +159,7 @@ if(!isset($prods))
                             <?= anchor('', '<i class="menu-icon fa-solid fa-store"></i><span class="menu-name">Home</span>', 'class="menu-link"'); ?>
                         </li>
                         <li class="menu-item">
-                            <?= anchor('cart', '<i class="menu-icon fa-solid fa-cart-shopping-fast"></i><span class="menu-name">Cart</span>', 'class="menu-link"'); ?>
+                            <?= anchor('cart', '<i class="menu-icon fa-solid fa-cart-shopping-fast"></i><span class="menu-name">Cart</span><span class="prod-count">'.$this->cart->total_items().'</span>', 'class="menu-link"'); ?>
                         </li>
                         <li class="menu-item">
                             <?= anchor('checkout', '<i class="menu-icon fa-solid fa-cart-shopping-fast"></i><span class="menu-name">Checkout</span>', 'class="menu-link"'); ?>
