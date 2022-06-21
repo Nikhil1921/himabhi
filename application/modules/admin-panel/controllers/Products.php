@@ -87,9 +87,10 @@ class Products extends Admin_controller  {
             $data['data'] = $this->main->get($this->table, 't_title, slug, price, quantity, description, image, t_sub_title, short_description, packing, quote, features, feature_title, sub_description', ['id' => d_id($id)]);
             $data['data']['ingredients'] = $this->main->getAll('product_ingredients', 'i_id', ['p_id' => d_id($id)]);
             $data['data']['prod_features'] = $this->main->getAll('product_features', 'f_id', ['p_id' => d_id($id)]);
-            $data['features'] = $this->main->getAll('features', 'id, f_title', ['is_deleted' => 0]);
-            $data['ingredients'] = $this->main->getAll('ingredients', 'id, i_title', ['is_deleted' => 0]);
         }
+
+        $data['features'] = $this->main->getAll('features', 'id, f_title', ['is_deleted' => 0]);
+        $data['ingredients'] = $this->main->getAll('ingredients', 'id, i_title', ['is_deleted' => 0]);
         
         if ($this->form_validation->run() == FALSE)
         {
