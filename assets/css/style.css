@@ -8181,8 +8181,8 @@ select:visited {
 
 @media screen and (max-width: 600px) {
   .menu-link .prod-count {
-    display: block !important;
-    top: 0px;
+  display: block !important;
+  top: 0px;
   left: 143px !important;
   color: #fff;
   width: 15px;
